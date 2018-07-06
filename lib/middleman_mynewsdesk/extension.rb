@@ -1,32 +1,30 @@
+# frozen_string_literal: true
+
 # Require core library
-require 'middleman-core'
+require "middleman-core"
 
 # Extension namespace
 class Mynewsdesk < ::Middleman::Extension
-  option :my_option, 'default', 'An example option'
+  option :api_key, "api_key", "Mynewsdesk API key"
+  expose_to_config mynewsdesk_items: :mynewsdesk_items
+  expose_to_template mynewsdesk_items: :mynewsdesk_items
 
-  def initialize(app, options_hash={}, &block)
+  def initialize(app, options_hash = {}, &block)
     # Call super to build options from the options_hash
     super
 
     # Require libraries only when activated
-    # require 'necessary/library'
+    require "http"
+    require "json"
+    require "middleman_mynewsdesk/mynewsdesk_item.rb"
 
-    # set up your extension
-    puts options.api_key
+    @base_url = "https://www.mynewsdesk.com/services/pressroom/list/#{options.api_key}?format=json"
   end
 
-  def after_configuration
-    # Do something
+  def mynewsdesk_items
+    @items ||= JSON.parse(HTTP.get(@base_url).to_s, object_class: OpenStruct).items.item.map do |item|
+      MynewsdeskItem.new item
+    end
+    @items
   end
-
-  # A Sitemap Manipulator
-  def manipulate_resource_list(resources)
-    pp resources
-  end
-
-  # helpers do
-  #   def a_helper
-  #   end
-  # end
 end
