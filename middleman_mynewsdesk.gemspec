@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # The version of middleman-core your extension depends on
-  s.add_runtime_dependency("middleman-core", [">= 4.2.1"])
+  s.add_runtime_dependency("middleman-core", ["~> 4.2"])
 
   # Additional dependencies
-  s.add_runtime_dependency("http", ">= 3.3.0")
+  s.add_runtime_dependency("http", "~> 3.3")
 end
