@@ -16,15 +16,12 @@ class Mynewsdesk < ::Middleman::Extension
     # Require libraries only when activated
     require "http"
     require "json"
-    require "middleman_mynewsdesk/mynewsdesk_item.rb"
 
     @base_url = "https://www.mynewsdesk.com/services/pressroom/list/#{options.api_key}?format=json"
   end
 
   def mynewsdesk_items
-    @items ||= JSON.parse(HTTP.get(@base_url).to_s, object_class: OpenStruct).items.item.map do |item|
-      MynewsdeskItem.new item
-    end
+    @items ||= JSON.parse(HTTP.get(@base_url).to_s, object_class: RecursiveOpenStruct).items.item
     @items
   end
 end

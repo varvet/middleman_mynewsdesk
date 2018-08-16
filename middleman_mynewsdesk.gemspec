@@ -3,7 +3,7 @@ $:.push File.expand_path('lib', __dir__)
 
 Gem::Specification.new do |s|
   s.name        = "middleman_mynewsdesk"
-  s.version     = "0.0.1"
+  s.version     = "0.0.4"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Johan Halse"]
   s.email       = ["johan.halse@varvet.com"]
@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
 
   # Additional dependencies
   s.add_runtime_dependency("http", "~> 3.3")
+  s.add_runtime_dependency("recursive-open-struct", "~> 1.1")
 end
