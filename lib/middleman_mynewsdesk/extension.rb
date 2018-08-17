@@ -17,11 +17,11 @@ class Mynewsdesk < ::Middleman::Extension
     require "http"
     require "json"
 
-    @base_url = "https://www.mynewsdesk.com/services/pressroom/list/#{options.api_key}?format=json"
+    @base_url = "https://www.mynewsdesk.com/services/pressroom/list/#{options.api_key}?format=json&limit=100"
   end
 
-  def mynewsdesk_items
+  def mynewsdesk_items(limit=20)
     @items ||= JSON.parse(HTTP.get(@base_url).to_s, object_class: RecursiveOpenStruct).items.item
-    @items
+    @items[0..limit-1]
   end
 end
