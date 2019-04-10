@@ -7,7 +7,7 @@ require "middleman-core"
 class Mynewsdesk < ::Middleman::Extension
   option :api_key, "api_key", "Mynewsdesk API key"
   option :types_of_media, [:pressrelease], "Types of media to include"
-  
+
   expose_to_config mynewsdesk_items: :mynewsdesk_items
   expose_to_template mynewsdesk_items: :mynewsdesk_items
 
@@ -26,6 +26,7 @@ class Mynewsdesk < ::Middleman::Extension
     items = []
     0.step(2000, 100) do |offset|
       i = items_for_offset(item, offset)
+      return items if i.nil? # If we have offset 100 and exactly 100 posts, we get nil back
       items.concat i
       break if i.length < 100
     end
